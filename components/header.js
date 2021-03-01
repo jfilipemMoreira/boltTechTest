@@ -1,58 +1,28 @@
-import Link from 'next/link'
-import { signIn, signOut, useSession } from 'next-auth/client'
-import styles from './header.module.css'
+ import Login from '../pages/login'
+ import Logout from '../pages/logout'
+
+ export function parseCookies(req) {
+  return cookie.parse(req ? req.headers.cookie || "" : document.cookie)
+}
 
 // The approach used in this component shows how to built a sign in and sign out
 // component that works on pages which support both client and server side
 // rendering, and avoids any flash incorrect content on initial page load.
-export default function Header (userid) {
-  const [ session, loading ] = useSession()
-  
-  return (
-    <header {... userid}>
-      <noscript>
-        <style>{`.nojs-show { opacity: 1; top: 0; }`}</style>
-      </noscript>
-      <div className={styles.signedInStatus}>
-        <p className={`nojs-show ${(!session && loading) ? styles.loading : styles.loaded}`}>
-          {!session && <>
-            <span className={styles.notSignedInText}>You are not signed in</span>
-            <a
-                href={`/api/auth/signin`}
-                className={styles.buttonPrimary}
-                onClick={(e) => {
-                  e.preventDefault()
-                  signIn()
-                }}
-              >
-                Sign in
-              </a>
-          </>}
-          {session && <>
-            {session.user.image && <span style={{backgroundImage: `url(${session.user.image})` }} className={styles.avatar}/>}
-            <span className={styles.signedInText}>
-              <small>Signed in as</small><br/>
-              <strong>{session.user.email || session.user.name}</strong>
-              </span>
-            <a
-                href={`/api/auth/signout`}
-                className={styles.button}
-                onClick={(e) => {
-                  e.preventDefault()
-                  signOut()
-                }}
-              >
-                Sign out
-              </a>
-          </>}
-        </p>
-      </div>
-      <nav>
-        <ul className={styles.navItems}>
-          <li className={styles.navItem}><Link href="/"><a>Home</a></Link></li>
-          <li className={styles.navItem}><Link href="/profile/"{...userid}><a>Client</a></Link></li>
-        </ul>
-      </nav>
+export default function Header (data) {
+  Header.getInitialProps = async ({ req }) => {
+    const data = parseCookies(req)
+    console.log("Getting Header Cookies")
+    console.log(data)
+    return {
+        cookies: data,
+        allPostsData: []
+    }
+}
+  return data ? (
+    <header>
+      <Login/>
     </header>
-  )
+  ) : (<header>
+    <Logout/>
+  </header>)
 }

@@ -1,6 +1,9 @@
 // pages/profile.js
 import Layout from '../../components/layout'
 import { PrismaClient } from '@prisma/client';
+import ProjectListElement from '../../components/projectListElement'
+import utilStyles from '../../styles/utils.module.css'
+import RegisterProject  from '../../components/register_project'
 
 export async function getServerSideProps({ params }) {
   const prisma = new PrismaClient();
@@ -11,8 +14,6 @@ export async function getServerSideProps({ params }) {
     }
   });
 
-  console.log(user)
- 
   return {
     props: { user },
   }
@@ -20,12 +21,21 @@ export async function getServerSideProps({ params }) {
 
 const Profile = ({ user }) => {
   // Show the user. No loading state is required
-  return (
+  return user.projects && user.projects.length > 0 ? (
     <Layout>
-      <h1>Your Profile</h1>
-      <pre>{JSON.stringify(user, null, 2)}</pre>
-    </Layout>
-  )
+      <h1>Your Profile 2 </h1>
+      <ul className={utilStyles.list} id={"project_list_"+ user.id}>
+        {user.projects.map((project) => (
+          <ProjectListElement project={project}/>
+        ))}
+      </ul>
+      <RegisterProject user={user.id}/>
+         </Layout>
+  ) : (
+      <Layout>
+        <h1>Your Profile</h1>
+      </Layout>
+    )
 }
 
 export default Profile

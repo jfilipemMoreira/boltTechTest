@@ -50,4 +50,13 @@
   .lightText {
     color: #666;
   }
-  
+
+  .finishedTask {
+    background-color: green;
+    color: #FFF
+  }
+
+  .onGoingTask {
+    background-color: yellow;
+    color: #666
+  }

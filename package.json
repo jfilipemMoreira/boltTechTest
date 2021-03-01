@@ -6,12 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "stop": "next stop",
     "db": "prisma studio --experimental",
     "db-save": "prisma migrate save --experimental",
     "db-up": "prisma migrate up --experimental",
     "generate": "prisma generate"
   },
   "dependencies": {
+    "@prisma/client": "2.1.1",
+    "cookie": "^0.4.1",
     "date-fns": "^2.17.0",
     "gray-matter": "^4.0.2",
     "next": "^10.0.0",
@@ -20,12 +23,13 @@
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^6.7.0",
     "react": "17.0.1",
+    "react-cookie": "^4.0.3",
     "react-dom": "17.0.1",
     "remark": "^13.0.0",
     "remark-html": "^13.0.1",
     "sass": "^1.32.8",
-    "tailwindcss": "^2.0.3",
-    "@prisma/client": "2.1.1"
+    "swr": "^0.1.18",
+    "tailwindcss": "^2.0.3"
   },
   "devDependencies": {
     "@prisma/cli": "2.1.1",
