@@ -34,6 +34,7 @@ const Profile = ({ user }) => {
   ) : (
       <Layout>
         <h1>Your Profile</h1>
+        <RegisterProject user={user.id}/>
       </Layout>
     )
 }
